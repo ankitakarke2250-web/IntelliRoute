@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetPage = document.getElementById(`${pageName}-page`);
             if (targetPage) {
                 targetPage.classList.remove('hidden');
-                pageTitle.textContent = this.textContent.trim();
+                // Extract text without icon
+                const navText = this.querySelector('span')?.textContent || this.textContent.trim();
+                pageTitle.textContent = navText.trim();
 
                 // Load page-specific data
                 loadPageData(pageName);
@@ -72,9 +74,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const activity = await api.getActivityLog();
         const activityLog = document.getElementById('activity-log');
         if (activity.success && activity.data.length > 0) {
-            activityLog.innerHTML = activity.data.map(log =>
-                `<p>${log.timestamp} - ${log.action} (${log.status})</p>`
-            ).join('');
+            activityLog.innerHTML = activity.data.map(log => {
+                const statusIcon = log.status === 'success' ? 'check-circle' : 'alert-circle';
+                const statusColor = log.status === 'success' ? 'var(--success)' : 'var(--danger)';
+                return `<p style="display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="${statusIcon}" style="color: ${statusColor}; width: 16px; height: 16px;"></i>
+                    <span>${log.timestamp} - ${log.action} (${log.status})</span>
+                </p>`;
+            }).join('');
+            // Initialize Lucide icons for dynamically added content
+            lucide.createIcons();
         } else {
             activityLog.innerHTML = '<p class="no-data">No recent activities</p>';
         }
@@ -94,40 +103,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     selector: 'node',
                     style: {
-                        'background-color': '#2563eb',
+                        'background-color': '#00d4ff',
                         'label': 'data(label)',
-                        'color': '#fff',
+                        'color': '#0a0f1a',
                         'text-valign': 'center',
                         'text-halign': 'center',
-                        'width': '40px',
-                        'height': '40px',
-                        'font-size': '10px'
+                        'width': '50px',
+                        'height': '50px',
+                        'font-size': '12px',
+                        'font-weight': 'bold',
+                        'border-width': 2,
+                        'border-color': '#00e5ff',
+                        'text-background-color': 'transparent'
                     }
                 },
                 {
                     selector: 'edge',
                     style: {
                         'width': 2,
-                        'line-color': '#475569',
-                        'target-arrow-color': '#475569',
+                        'line-color': '#334155',
+                        'target-arrow-color': '#00d4ff',
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier',
                         'label': 'data(label)',
-                        'color': '#ffffff',
-                        'text-background-color': '#1e293b',
-                        'text-background-opacity': 0.8,
-                        'text-background-padding': '2px',
+                        'color': '#94a3b8',
+                        'text-background-color': '#1a1f2e',
+                        'text-background-opacity': 0.9,
+                        'text-background-padding': '4px',
                         'text-background-shape': 'roundrectangle',
-                        'font-size': '9px',
+                        'font-size': '10px',
                         'text-rotation': 'autorotate',
-                        'text-margin-y': -8
+                        'text-margin-y': -10
                     }
                 }
             ],
             layout: {
                 name: 'cose',
-                animate: false,
-                animationDuration: 0
+                animate: true,
+                animationDuration: 800
             },
             zoom: 0.8,
             pan: { x: 100, y: 100 }
@@ -164,11 +177,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${router.connections || 0}</td>
                 <td>
                     <button class="btn btn-sm btn-danger" onclick="deleteRouter(${router.id})">
-                        <i class="fas fa-trash"></i>
+                        <i data-lucide="trash-2"></i>
                     </button>
                 </td>
             </tr>
         `).join('');
+        // Initialize Lucide icons for dynamically added content
+        lucide.createIcons();
     }
 
     function renderLinksTable(links) {
@@ -186,11 +201,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${link.cost}</td>
                 <td>
                     <button class="btn btn-sm btn-danger" onclick="deleteLink(${link.id})">
-                        <i class="fas fa-trash"></i>
+                        <i data-lucide="trash-2"></i>
                     </button>
                 </td>
             </tr>
         `).join('');
+        // Initialize Lucide icons for dynamically added content
+        lucide.createIcons();
     }
 
     function populateRouterSelects(routers) {
@@ -277,40 +294,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     selector: 'node',
                     style: {
-                        'background-color': '#2563eb',
+                        'background-color': '#00d4ff',
                         'label': 'data(label)',
-                        'color': '#fff',
+                        'color': '#0a0f1a',
                         'text-valign': 'center',
                         'text-halign': 'center',
-                        'width': '60px',
-                        'height': '60px',
-                        'font-size': '14px'
+                        'width': '70px',
+                        'height': '70px',
+                        'font-size': '16px',
+                        'font-weight': 'bold',
+                        'border-width': 3,
+                        'border-color': '#00e5ff',
+                        'text-background-color': 'transparent',
+                        'shadow-blur': '20px',
+                        'shadow-color': '#00d4ff',
+                        'shadow-opacity': 0.3
                     }
                 },
                 {
                     selector: 'edge',
                     style: {
                         'width': 3,
-                        'line-color': '#475569',
-                        'target-arrow-color': '#475569',
+                        'line-color': '#334155',
+                        'target-arrow-color': '#00d4ff',
                         'target-arrow-shape': 'triangle',
                         'curve-style': 'bezier',
                         'label': 'data(label)',
-                        'color': '#ffffff',
-                        'text-background-color': '#1e293b',
-                        'text-background-opacity': 0.8,
-                        'text-background-padding': '3px',
+                        'color': '#94a3b8',
+                        'text-background-color': '#1a1f2e',
+                        'text-background-opacity': 0.95,
+                        'text-background-padding': '5px',
                         'text-background-shape': 'roundrectangle',
-                        'font-size': '12px',
+                        'font-size': '14px',
                         'text-rotation': 'autorotate',
-                        'text-margin-y': -10
+                        'text-margin-y': -12
                     }
                 }
             ],
             layout: {
                 name: 'cose',
                 animate: true,
-                animationDuration: 500
+                animationDuration: 1000,
+                nodeRepulsion: 8000,
+                idealEdgeLength: 150
             }
         });
     }
@@ -387,6 +413,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td><span class="status-badge ${packet.status}">${packet.status}</span></td>
             </tr>
         `).join('');
+        // Initialize Lucide icons for dynamically added content
+        lucide.createIcons();
     }
 
     document.getElementById('generate-packet-btn').addEventListener('click', function() {
@@ -458,9 +486,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const activity = await api.getActivityLog();
             if (activity.success && activity.data.length > 0) {
                 const activityLog = document.getElementById('activity-log');
-                activityLog.innerHTML = activity.data.map(log =>
-                    `<p>${log.timestamp} - ${log.action} (${log.status})</p>`
-                ).join('');
+                activityLog.innerHTML = activity.data.map(log => {
+                    const statusIcon = log.status === 'success' ? 'check-circle' : 'alert-circle';
+                    const statusColor = log.status === 'success' ? 'var(--success)' : 'var(--danger)';
+                    return `<p style="display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="${statusIcon}" style="color: ${statusColor}; width: 16px; height: 16px;"></i>
+                        <span>${log.timestamp} - ${log.action} (${log.status})</span>
+                    </p>`;
+                }).join('');
+                // Initialize Lucide icons for dynamically added content
+                lucide.createIcons();
             }
         } else {
             showToast('Error running sort: ' + result.error, 'error');
@@ -566,10 +601,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!treeData.success || !treeData.data.nodes || treeData.data.nodes.length === 0) {
             container.innerHTML = `
                 <div class="empty-tree-state">
-                    <div class="empty-icon"><i class="fas fa-tree"></i></div>
+                    <div class="empty-icon"><i data-lucide="git-fork"></i></div>
                     <p>Tree is empty. Insert nodes to build your BST.</p>
                 </div>
             `;
+            // Initialize Lucide icons
+            lucide.createIcons();
             return;
         }
 
@@ -588,21 +625,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="bst-info">
                     <div class="info-badge">
-                        <i class="fas fa-database"></i>
+                        <i data-lucide="database"></i>
                         <span>Nodes: ${nodes.length}</span>
                     </div>
                     <div class="info-badge">
-                        <i class="fas fa-layer-group"></i>
+                        <i data-lucide="layers"></i>
                         <span>Height: ${treeData.data.height}</span>
                     </div>
                     <div class="info-badge">
-                        <i class="fas fa-leaf"></i>
+                        <i data-lucide="leaf"></i>
                         <span>Leaves: ${treeData.data.leaf_nodes}</span>
                     </div>
                 </div>
             </div>
         `;
         console.log('Tree visualization rendered');
+
+        // Initialize Lucide icons for dynamically added content
+        lucide.createIcons();
 
         // Add pan/zoom functionality
         initTreePanZoom();
@@ -759,22 +799,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     label: 'Execution Time (ms)',
                     data: data.sorting.map(s => s.time),
-                    backgroundColor: '#2563eb'
+                    backgroundColor: 'rgba(0, 212, 255, 0.8)',
+                    borderColor: '#00d4ff',
+                    borderWidth: 2,
+                    borderRadius: 8
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: { labels: { color: '#f1f5f9' } },
+                    legend: { labels: { color: '#94a3b8' } },
                     title: {
                         display: true,
                         text: data.note || 'Sorting Algorithm Performance',
-                        color: '#f1f5f9'
+                        color: '#f8fafc'
                     }
                 },
                 scales: {
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(30, 41, 59, 0.5)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(30, 41, 59, 0.5)' }
+                    }
                 }
             }
         });
@@ -788,22 +837,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     label: 'Comparisons',
                     data: data.search.map(s => s.comparisons),
-                    backgroundColor: '#10b981'
+                    backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                    borderColor: '#8b5cf6',
+                    borderWidth: 2,
+                    borderRadius: 8
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: { labels: { color: '#f1f5f9' } },
+                    legend: { labels: { color: '#94a3b8' } },
                     title: {
                         display: true,
                         text: 'Search Algorithm Performance',
-                        color: '#f1f5f9'
+                        color: '#f8fafc'
                     }
                 },
                 scales: {
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
+                    y: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(30, 41, 59, 0.5)' }
+                    },
+                    x: {
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(30, 41, 59, 0.5)' }
+                    }
                 }
             }
         });
@@ -828,12 +886,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
 
-        const icon = type === 'success' ? 'fa-check-circle' :
-                    type === 'error' ? 'fa-exclamation-circle' :
-                    'fa-exclamation-triangle';
+        const iconName = type === 'success' ? 'check-circle' :
+                        type === 'error' ? 'alert-circle' :
+                        'alert-triangle';
 
-        toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+        toast.innerHTML = `<i data-lucide="${iconName}"></i><span>${message}</span>`;
         container.appendChild(toast);
+
+        // Initialize Lucide icon for this toast
+        lucide.createIcons();
 
         setTimeout(() => {
             toast.remove();

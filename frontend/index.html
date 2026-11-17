@@ -3,45 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Network Routing and Management System</title>
+    <title>IntelliRoute - Smart Network Routing System</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fas fa-network-wired"></i> IntelliRoute</h2>
+                <h2><i data-lucide="network"></i> IntelliRoute</h2>
                 <p>Network Management System</p>
             </div>
             <nav class="sidebar-nav">
                 <a href="#" class="nav-item active" data-page="dashboard">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                    <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
                 </a>
                 <a href="#" class="nav-item" data-page="network">
-                    <i class="fas fa-server"></i> Network Management
+                    <i data-lucide="server"></i> <span>Network Management</span>
                 </a>
                 <a href="#" class="nav-item" data-page="topology">
-                    <i class="fas fa-project-diagram"></i> Network Topology
+                    <i data-lucide="git-branch"></i> <span>Network Topology</span>
                 </a>
                 <a href="#" class="nav-item" data-page="routing">
-                    <i class="fas fa-route"></i> Routing Simulation
+                    <i data-lucide="route"></i> <span>Routing Simulation</span>
                 </a>
                 <a href="#" class="nav-item" data-page="packets">
-                    <i class="fas fa-envelope"></i> Packet Management
+                    <i data-lucide="mail"></i> <span>Packet Management</span>
                 </a>
                 <a href="#" class="nav-item" data-page="sorting">
-                    <i class="fas fa-sort"></i> Sorting & Searching
+                    <i data-lucide="arrow-up-down"></i> <span>Sorting & Searching</span>
                 </a>
                 <a href="#" class="nav-item" data-page="trees">
-                    <i class="fas fa-tree"></i> Tree Explorer
+                    <i data-lucide="git-fork"></i> <span>Tree Explorer</span>
                 </a>
                 <a href="#" class="nav-item" data-page="analysis">
-                    <i class="fas fa-chart-line"></i> Performance Analysis
+                    <i data-lucide="bar-chart-3"></i> <span>Performance Analysis</span>
                 </a>
                 <a href="#" class="nav-item" data-page="about">
-                    <i class="fas fa-info-circle"></i> About Project
+                    <i data-lucide="info"></i> <span>About Project</span>
                 </a>
             </nav>
         </aside>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="top-bar-right">
                     <button class="btn btn-secondary" id="reset-data">
-                        <i class="fas fa-redo"></i> Reset Data
+                        <i data-lucide="refresh-cw"></i> Reset Data
                     </button>
                     <div class="status-indicator">
                         <span class="status-dot"></span>
@@ -71,7 +71,7 @@
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-server"></i>
+                                <i data-lucide="server"></i>
                             </div>
                             <div class="stat-info">
                                 <h3 id="stat-routers">0</h3>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-check-circle"></i>
+                                <i data-lucide="check-circle"></i>
                             </div>
                             <div class="stat-info">
                                 <h3 id="stat-active">0</h3>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-link"></i>
+                                <i data-lucide="link"></i>
                             </div>
                             <div class="stat-info">
                                 <h3 id="stat-connections">0</h3>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-envelope"></i>
+                                <i data-lucide="mail"></i>
                             </div>
                             <div class="stat-info">
                                 <h3 id="stat-packets">0</h3>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-clock"></i>
+                                <i data-lucide="clock"></i>
                             </div>
                             <div class="stat-info">
                                 <h3 id="stat-pending">0</h3>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <i class="fas fa-check-double"></i>
+                                <i data-lucide="check-check"></i>
                             </div>
                             <div class="stat-info">
                                 <h3 id="stat-processed">0</h3>
@@ -127,11 +127,11 @@
 
                     <div class="dashboard-charts">
                         <div class="chart-card">
-                            <h3>Network Topology Preview</h3>
+                            <h3><i data-lucide="git-branch"></i> Network Topology Preview</h3>
                             <div id="topology-preview"></div>
                         </div>
                         <div class="chart-card">
-                            <h3>Recent Activities</h3>
+                            <h3><i data-lucide="activity"></i> Recent Activities</h3>
                             <div id="activity-log" class="activity-log">
                                 <p class="no-data">No recent activities</p>
                             </div>
@@ -143,9 +143,9 @@
                 <div class="page hidden" id="network-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Router Management</h2>
+                            <h2><i data-lucide="server"></i> Router Management</h2>
                             <button class="btn btn-primary" id="add-router-btn">
-                                <i class="fas fa-plus"></i> Add Router
+                                <i data-lucide="plus"></i> Add Router
                             </button>
                         </div>
                         <div class="router-form hidden" id="router-form">
@@ -170,8 +170,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>&nbsp;</label>
-                                        <button type="submit" class="btn btn-success">Add Router</button>
-                                        <button type="button" class="btn btn-secondary" id="cancel-router">Cancel</button>
+                                        <button type="submit" class="btn btn-success"><i data-lucide="check"></i> Add Router</button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-router"><i data-lucide="x"></i> Cancel</button>
                                     </div>
                                 </div>
                             </form>
@@ -199,9 +199,9 @@
 
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Connection Management</h2>
+                            <h2><i data-lucide="link"></i> Connection Management</h2>
                             <button class="btn btn-primary" id="add-connection-btn">
-                                <i class="fas fa-link"></i> Add Connection
+                                <i data-lucide="plus"></i> Add Connection
                             </button>
                         </div>
                         <div class="connection-form hidden" id="connection-form">
@@ -223,8 +223,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>&nbsp;</label>
-                                        <button type="submit" class="btn btn-success">Add Connection</button>
-                                        <button type="button" class="btn btn-secondary" id="cancel-connection">Cancel</button>
+                                        <button type="submit" class="btn btn-success"><i data-lucide="check"></i> Add Connection</button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-connection"><i data-lucide="x"></i> Cancel</button>
                                     </div>
                                 </div>
                             </form>
@@ -254,9 +254,9 @@
                 <div class="page hidden" id="topology-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Network Topology Visualization</h2>
+                            <h2><i data-lucide="git-branch"></i> Network Topology Visualization</h2>
                             <button class="btn btn-secondary" id="refresh-topology">
-                                <i class="fas fa-sync"></i> Refresh
+                                <i data-lucide="refresh-cw"></i> Refresh
                             </button>
                         </div>
                         <div class="topology-container">
@@ -269,7 +269,7 @@
                 <div class="page hidden" id="routing-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Routing Algorithm Simulation</h2>
+                            <h2><i data-lucide="route"></i> Routing Algorithm Simulation</h2>
                         </div>
                         <div class="routing-controls">
                             <div class="form-row">
@@ -292,7 +292,7 @@
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <button class="btn btn-primary" id="run-routing">
-                                        <i class="fas fa-play"></i> Run Algorithm
+                                        <i data-lucide="play"></i> Run Algorithm
                                     </button>
                                 </div>
                             </div>
@@ -319,9 +319,9 @@
                 <div class="page hidden" id="packets-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Packet Management</h2>
+                            <h2><i data-lucide="mail"></i> Packet Management</h2>
                             <button class="btn btn-primary" id="generate-packet-btn">
-                                <i class="fas fa-plus"></i> Generate Packet
+                                <i data-lucide="plus"></i> Generate Packet
                             </button>
                         </div>
                         <div class="packet-form hidden" id="packet-form">
@@ -353,15 +353,15 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label>&nbsp;</label>
-                                        <button type="submit" class="btn btn-success">Generate Packet</button>
-                                        <button type="button" class="btn btn-secondary" id="cancel-packet">Cancel</button>
+                                        <button type="submit" class="btn btn-success"><i data-lucide="check"></i> Generate Packet</button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-packet"><i data-lucide="x"></i> Cancel</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="packet-actions">
                             <button class="btn btn-primary" id="process-packet">
-                                <i class="fas fa-paper-plane"></i> Process Next Packet
+                                <i data-lucide="send"></i> Process Next Packet
                             </button>
                         </div>
                         <div class="data-table-container">
@@ -390,7 +390,7 @@
                 <div class="page hidden" id="sorting-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Sorting Algorithms</h2>
+                            <h2><i data-lucide="arrow-up-down"></i> Sorting Algorithms</h2>
                         </div>
                         <div class="algorithm-controls">
                             <div class="form-row">
@@ -411,10 +411,10 @@
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <button class="btn btn-primary" id="run-sorting">
-                                        <i class="fas fa-play"></i> Sort
+                                        <i data-lucide="play"></i> Sort
                                     </button>
                                     <button class="btn btn-secondary" id="generate-random">
-                                        <i class="fas fa-random"></i> Random
+                                        <i data-lucide="shuffle"></i> Random
                                     </button>
                                 </div>
                             </div>
@@ -445,7 +445,7 @@
 
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Searching Algorithms</h2>
+                            <h2><i data-lucide="search"></i> Searching Algorithms</h2>
                         </div>
                         <div class="algorithm-controls">
                             <div class="form-row">
@@ -463,7 +463,7 @@
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <button class="btn btn-primary" id="run-search">
-                                        <i class="fas fa-search"></i> Search
+                                        <i data-lucide="search"></i> Search
                                     </button>
                                 </div>
                             </div>
@@ -489,7 +489,7 @@
                 <div class="page hidden" id="trees-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Binary Search Tree Explorer</h2>
+                            <h2><i data-lucide="git-fork"></i> Binary Search Tree Explorer</h2>
                         </div>
                         <div class="tree-controls">
                             <div class="form-row">
@@ -508,15 +508,15 @@
                                 <div class="form-group">
                                     <label>&nbsp;</label>
                                     <button class="btn btn-primary" id="run-tree-operation">
-                                        <i class="fas fa-play"></i> Execute
+                                        <i data-lucide="play"></i> Execute
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="tree-traversals">
-                            <button class="btn btn-secondary" data-traversal="inorder">Inorder</button>
-                            <button class="btn btn-secondary" data-traversal="preorder">Preorder</button>
-                            <button class="btn btn-secondary" data-traversal="postorder">Postorder</button>
+                            <button class="btn btn-secondary" data-traversal="inorder"><i data-lucide="list"></i> Inorder</button>
+                            <button class="btn btn-secondary" data-traversal="preorder"><i data-lucide="arrow-up"></i> Preorder</button>
+                            <button class="btn btn-secondary" data-traversal="postorder"><i data-lucide="arrow-down"></i> Postorder</button>
                         </div>
                         <div class="tree-results hidden" id="tree-results">
                             <div class="result-card">
@@ -542,18 +542,18 @@
                 <div class="page hidden" id="analysis-page">
                     <div class="content-section">
                         <div class="section-header">
-                            <h2>Algorithm Performance Comparison</h2>
+                            <h2><i data-lucide="bar-chart-3"></i> Algorithm Performance Comparison</h2>
                             <button class="btn btn-primary" id="run-benchmark">
-                                <i class="fas fa-chart-bar"></i> Run Benchmark
+                                <i data-lucide="bar-chart-3"></i> Run Benchmark
                             </button>
                         </div>
                         <div class="benchmark-results hidden" id="benchmark-results">
                             <div class="chart-card">
-                                <h3>Sorting Algorithm Performance</h3>
+                                <h3><i data-lucide="arrow-up-down"></i> Sorting Algorithm Performance</h3>
                                 <canvas id="sorting-chart"></canvas>
                             </div>
                             <div class="chart-card">
-                                <h3>Search Algorithm Performance</h3>
+                                <h3><i data-lucide="search"></i> Search Algorithm Performance</h3>
                                 <canvas id="search-chart"></canvas>
                             </div>
                         </div>
@@ -564,21 +564,22 @@
                 <div class="page hidden" id="about-page">
                     <div class="content-section">
                         <div class="about-card">
-                            <h2>About Smart Network Routing System</h2>
+                            <h2>About IntelliRoute</h2>
                             <p>
-                                This project demonstrates the practical application of Data Structures and Algorithms
-                                in computer networking. It is designed as an academic project for third-semester
-                                B.Tech Engineering students studying Data Structures.
+                                IntelliRoute is a comprehensive network simulation platform that demonstrates the practical
+                                application of data structures and algorithms in computer networking. Built with C for core
+                                algorithms, Python Flask for the backend, and modern web technologies for the frontend.
                             </p>
                             <h3>Key Features</h3>
                             <ul>
                                 <li>Network router management using linked lists</li>
                                 <li>Graph representation with adjacency matrix and list</li>
-                                <li>Routing algorithms (BFS, DFS, Dijkstra)</li>
+                                <li>Routing algorithms (BFS, DFS, Dijkstra) implemented in C</li>
                                 <li>Stack and queue implementations for packet handling</li>
-                                <li>Sorting and searching algorithms</li>
-                                <li>Binary Search Tree operations</li>
-                                <li>Performance analysis and comparison</li>
+                                <li>Sorting and searching algorithms with actual C execution</li>
+                                <li>Binary Search Tree operations with modern visualization</li>
+                                <li>Performance analysis and comparison with real metrics</li>
+                                <li>Activity logging and system monitoring</li>
                             </ul>
                             <h3>Technology Stack</h3>
                             <ul>
@@ -586,11 +587,13 @@
                                 <li><strong>Python Flask:</strong> Backend API and C integration</li>
                                 <li><strong>HTML/CSS/JavaScript:</strong> Frontend interface</li>
                                 <li><strong>Cytoscape.js:</strong> Network visualization</li>
+                                <li><strong>Chart.js:</strong> Performance charts</li>
                             </ul>
-                            <h3>Academic Purpose</h3>
+                            <h3>Architecture</h3>
                             <p>
-                                This project is designed to help students understand how data structures are used
-                                in real-world applications, specifically in computer networking and routing.
+                                The system uses a hybrid architecture where C programs handle compute-intensive algorithms
+                                while Python Flask provides web API services. All algorithms execute actual C code via
+                                subprocess integration, ensuring real performance measurements.
                             </p>
                         </div>
                     </div>
@@ -607,5 +610,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>
