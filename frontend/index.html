@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Network Routing and Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-network-wired"></i> IntelliRoute</h2>
+                <p>Network Management System</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-page="network">
+                    <i class="fas fa-server"></i> Network Management
+                </a>
+                <a href="#" class="nav-item" data-page="topology">
+                    <i class="fas fa-project-diagram"></i> Network Topology
+                </a>
+                <a href="#" class="nav-item" data-page="routing">
+                    <i class="fas fa-route"></i> Routing Simulation
+                </a>
+                <a href="#" class="nav-item" data-page="packets">
+                    <i class="fas fa-envelope"></i> Packet Management
+                </a>
+                <a href="#" class="nav-item" data-page="sorting">
+                    <i class="fas fa-sort"></i> Sorting & Searching
+                </a>
+                <a href="#" class="nav-item" data-page="trees">
+                    <i class="fas fa-tree"></i> Tree Explorer
+                </a>
+                <a href="#" class="nav-item" data-page="analysis">
+                    <i class="fas fa-chart-line"></i> Performance Analysis
+                </a>
+                <a href="#" class="nav-item" data-page="about">
+                    <i class="fas fa-info-circle"></i> About Project
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <div class="top-bar-right">
+                    <button class="btn btn-secondary" id="reset-data">
+                        <i class="fas fa-redo"></i> Reset Data
+                    </button>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">System Online</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content Container -->
+            <div id="page-content">
+                <!-- Dashboard Page -->
+                <div class="page" id="dashboard-page">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="stat-routers">0</h3>
+                                <p>Total Routers</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="stat-active">0</h3>
+                                <p>Active Routers</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="stat-connections">0</h3>
+                                <p>Total Connections</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="stat-packets">0</h3>
+                                <p>Total Packets</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="stat-pending">0</h3>
+                                <p>Pending Packets</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="stat-processed">0</h3>
+                                <p>Processed Packets</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-charts">
+                        <div class="chart-card">
+                            <h3>Network Topology Preview</h3>
+                            <div id="topology-preview"></div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Recent Activities</h3>
+                            <div id="activity-log" class="activity-log">
+                                <p class="no-data">No recent activities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Management Page -->
+                <div class="page hidden" id="network-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Router Management</h2>
+                            <button class="btn btn-primary" id="add-router-btn">
+                                <i class="fas fa-plus"></i> Add Router
+                            </button>
+                        </div>
+                        <div class="router-form hidden" id="router-form">
+                            <form id="router-add-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Router Name</label>
+                                        <input type="text" id="router-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>IP Address</label>
+                                        <input type="text" id="router-ip" placeholder="192.168.1.1" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select id="router-status">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button type="submit" class="btn btn-success">Add Router</button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-router">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="data-table-container">
+                            <table class="data-table" id="routers-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>IP Address</th>
+                                        <th>Status</th>
+                                        <th>Connections</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="routers-table-body">
+                                    <tr>
+                                        <td colspan="6" class="no-data">No routers available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Connection Management</h2>
+                            <button class="btn btn-primary" id="add-connection-btn">
+                                <i class="fas fa-link"></i> Add Connection
+                            </button>
+                        </div>
+                        <div class="connection-form hidden" id="connection-form">
+                            <form id="connection-add-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Source Router</label>
+                                        <select id="source-router" required></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Destination Router</label>
+                                        <select id="dest-router" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Connection Cost</label>
+                                        <input type="number" id="connection-cost" min="1" value="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button type="submit" class="btn btn-success">Add Connection</button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-connection">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="data-table-container">
+                            <table class="data-table" id="connections-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Source</th>
+                                        <th>Destination</th>
+                                        <th>Cost</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="connections-table-body">
+                                    <tr>
+                                        <td colspan="5" class="no-data">No connections available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Topology Page -->
+                <div class="page hidden" id="topology-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Network Topology Visualization</h2>
+                            <button class="btn btn-secondary" id="refresh-topology">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="topology-container">
+                            <div id="cy"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Routing Simulation Page -->
+                <div class="page hidden" id="routing-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Routing Algorithm Simulation</h2>
+                        </div>
+                        <div class="routing-controls">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Source Router</label>
+                                    <select id="routing-source" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Destination Router</label>
+                                    <select id="routing-destination" required></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Algorithm</label>
+                                    <select id="routing-algorithm">
+                                        <option value="bfs">Breadth First Search (BFS)</option>
+                                        <option value="dfs">Depth First Search (DFS)</option>
+                                        <option value="dijkstra">Dijkstra's Algorithm</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary" id="run-routing">
+                                        <i class="fas fa-play"></i> Run Algorithm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="routing-results hidden" id="routing-results">
+                            <h3>Algorithm Results</h3>
+                            <div class="result-card">
+                                <h4>Traversal Order</h4>
+                                <p id="traversal-order"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Calculated Route</h4>
+                                <p id="calculated-route"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Total Cost</h4>
+                                <p id="total-cost"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Packet Management Page -->
+                <div class="page hidden" id="packets-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Packet Management</h2>
+                            <button class="btn btn-primary" id="generate-packet-btn">
+                                <i class="fas fa-plus"></i> Generate Packet
+                            </button>
+                        </div>
+                        <div class="packet-form hidden" id="packet-form">
+                            <form id="packet-add-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Source Router</label>
+                                        <select id="packet-source" required></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Destination Router</label>
+                                        <select id="packet-destination" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Packet Size (KB)</label>
+                                        <input type="number" id="packet-size" min="1" value="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Priority</label>
+                                        <select id="packet-priority">
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>&nbsp;</label>
+                                        <button type="submit" class="btn btn-success">Generate Packet</button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-packet">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="packet-actions">
+                            <button class="btn btn-primary" id="process-packet">
+                                <i class="fas fa-paper-plane"></i> Process Next Packet
+                            </button>
+                        </div>
+                        <div class="data-table-container">
+                            <table class="data-table" id="packets-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Source</th>
+                                        <th>Destination</th>
+                                        <th>Size</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="packets-table-body">
+                                    <tr>
+                                        <td colspan="6" class="no-data">No packets available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sorting & Searching Page -->
+                <div class="page hidden" id="sorting-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Sorting Algorithms</h2>
+                        </div>
+                        <div class="algorithm-controls">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Input Numbers (comma-separated)</label>
+                                    <input type="text" id="sorting-input" placeholder="5, 3, 8, 1, 9, 2">
+                                </div>
+                                <div class="form-group">
+                                    <label>Algorithm</label>
+                                    <select id="sorting-algorithm">
+                                        <option value="bubble">Bubble Sort</option>
+                                        <option value="selection">Selection Sort</option>
+                                        <option value="insertion">Insertion Sort</option>
+                                        <option value="merge">Merge Sort</option>
+                                        <option value="quick">Quick Sort</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary" id="run-sorting">
+                                        <i class="fas fa-play"></i> Sort
+                                    </button>
+                                    <button class="btn btn-secondary" id="generate-random">
+                                        <i class="fas fa-random"></i> Random
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sorting-results hidden" id="sorting-results">
+                            <div class="result-card">
+                                <h4>Original Array</h4>
+                                <p id="original-array"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Sorted Array</h4>
+                                <p id="sorted-array"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Comparisons</h4>
+                                <p id="sorting-comparisons"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Swaps</h4>
+                                <p id="sorting-swaps"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Execution Time</h4>
+                                <p id="sorting-time"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Searching Algorithms</h2>
+                        </div>
+                        <div class="algorithm-controls">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Search Element</label>
+                                    <input type="number" id="search-input" placeholder="Enter number to search">
+                                </div>
+                                <div class="form-group">
+                                    <label>Algorithm</label>
+                                    <select id="search-algorithm">
+                                        <option value="linear">Linear Search</option>
+                                        <option value="binary">Binary Search (requires sorted array)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary" id="run-search">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-results hidden" id="search-results">
+                            <div class="result-card">
+                                <h4>Search Result</h4>
+                                <p id="search-result"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Position</h4>
+                                <p id="search-position"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Comparisons</h4>
+                                <p id="search-comparisons"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tree Explorer Page -->
+                <div class="page hidden" id="trees-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Binary Search Tree Explorer</h2>
+                        </div>
+                        <div class="tree-controls">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Operation</label>
+                                    <select id="tree-operation">
+                                        <option value="insert">Insert Node</option>
+                                        <option value="delete">Delete Node</option>
+                                        <option value="search">Search Node</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Value</label>
+                                    <input type="number" id="tree-value" placeholder="Enter value">
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary" id="run-tree-operation">
+                                        <i class="fas fa-play"></i> Execute
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tree-traversals">
+                            <button class="btn btn-secondary" data-traversal="inorder">Inorder</button>
+                            <button class="btn btn-secondary" data-traversal="preorder">Preorder</button>
+                            <button class="btn btn-secondary" data-traversal="postorder">Postorder</button>
+                        </div>
+                        <div class="tree-results hidden" id="tree-results">
+                            <div class="result-card">
+                                <h4>Traversal Result</h4>
+                                <p id="traversal-result"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Tree Height</h4>
+                                <p id="tree-height"></p>
+                            </div>
+                            <div class="result-card">
+                                <h4>Leaf Nodes</h4>
+                                <p id="leaf-nodes"></p>
+                            </div>
+                        </div>
+                        <div class="tree-visualization">
+                            <div id="tree-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Analysis Page -->
+                <div class="page hidden" id="analysis-page">
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h2>Algorithm Performance Comparison</h2>
+                            <button class="btn btn-primary" id="run-benchmark">
+                                <i class="fas fa-chart-bar"></i> Run Benchmark
+                            </button>
+                        </div>
+                        <div class="benchmark-results hidden" id="benchmark-results">
+                            <div class="chart-card">
+                                <h3>Sorting Algorithm Performance</h3>
+                                <canvas id="sorting-chart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h3>Search Algorithm Performance</h3>
+                                <canvas id="search-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Page -->
+                <div class="page hidden" id="about-page">
+                    <div class="content-section">
+                        <div class="about-card">
+                            <h2>About Smart Network Routing System</h2>
+                            <p>
+                                This project demonstrates the practical application of Data Structures and Algorithms
+                                in computer networking. It is designed as an academic project for third-semester
+                                B.Tech Engineering students studying Data Structures.
+                            </p>
+                            <h3>Key Features</h3>
+                            <ul>
+                                <li>Network router management using linked lists</li>
+                                <li>Graph representation with adjacency matrix and list</li>
+                                <li>Routing algorithms (BFS, DFS, Dijkstra)</li>
+                                <li>Stack and queue implementations for packet handling</li>
+                                <li>Sorting and searching algorithms</li>
+                                <li>Binary Search Tree operations</li>
+                                <li>Performance analysis and comparison</li>
+                            </ul>
+                            <h3>Technology Stack</h3>
+                            <ul>
+                                <li><strong>C Programming:</strong> Core data structures and algorithms</li>
+                                <li><strong>Python Flask:</strong> Backend API and C integration</li>
+                                <li><strong>HTML/CSS/JavaScript:</strong> Frontend interface</li>
+                                <li><strong>Cytoscape.js:</strong> Network visualization</li>
+                            </ul>
+                            <h3>Academic Purpose</h3>
+                            <p>
+                                This project is designed to help students understand how data structures are used
+                                in real-world applications, specifically in computer networking and routing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.26.0/cytoscape.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
